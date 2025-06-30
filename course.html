@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StudySpace Cloud</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <h1>StudySpace Cloud</h1>
+  <nav><a href="index.html">Home</a></nav>
+</header>
+
+
+<a class="back-link" href="javascript:history.back()">&larr; Back</a>
+<h2 class="section-title" id="courseTitle"></h2>
+<div id="topicsContainer"></div>
+
+
+<script>
+function qp(k){return new URLSearchParams(location.search).get(k);}
+function render(){
+  const courseName=decodeURIComponent(qp('name')||'Course');
+  document.getElementById('courseTitle').textContent=courseName;
+  const tc=document.getElementById('topicsContainer');
+  const lectures=Math.floor(Math.random()*5)+8; // 8–12 lectures
+  for(let i=1;i<=lectures;i++){
+    const div=document.createElement('div');
+    div.className='topic-card';
+    div.innerHTML=`<h4>Lecture ${i}</h4>
+      <div class="topic-links">
+        <a href="#">Summary</a>
+        <a href="#">Exercise</a>
+        <a href="#">Exams</a>
+      </div>`;
+    tc.appendChild(div);
+  }
+}
+document.addEventListener('DOMContentLoaded',render);
+</script>
+
+</body>
+</html>

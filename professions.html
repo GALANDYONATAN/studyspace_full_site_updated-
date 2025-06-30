@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StudySpace Cloud</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <h1>StudySpace Cloud</h1>
+  <nav><a href="index.html">Home</a></nav>
+</header>
+
+
+<a class="back-link" href="index.html">&larr; Back</a>
+<h2 class="section-title" id="instTitle"></h2>
+<h2 class="section-title">Select a Profession</h2>
+<div id="profContainer" class="container"></div>
+
+
+<script src="data.js"></script>
+<script>
+function qp(k){return new URLSearchParams(location.search).get(k);}
+function render(){
+  const instId=qp('institution');
+  const inst=DB[instId];
+  if(!inst){return;}
+  document.getElementById('instTitle').textContent=inst.name;
+  const c=document.getElementById('profContainer');
+  Object.keys(inst.professions).forEach(pid=>{
+      const prof=inst.professions[pid];
+      const card=document.createElement('div');
+      card.className='card';
+      card.innerHTML=`<img src="https://via.placeholder.com/400x200?text=${encodeURIComponent(prof.name)}"><h3>${prof.name}</h3>`;
+      card.onclick=()=>location.href=`years.html?institution=${instId}&profession=${pid}`;
+      c.appendChild(card);
+  });
+}
+document.addEventListener('DOMContentLoaded',render);
+</script>
+
+</body>
+</html>

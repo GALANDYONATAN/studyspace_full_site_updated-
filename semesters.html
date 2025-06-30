@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StudySpace Cloud</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <h1>StudySpace Cloud</h1>
+  <nav><a href="index.html">Home</a></nav>
+</header>
+
+
+<a class="back-link" href="javascript:history.back()">&larr; Back</a>
+<h2 class="section-title" id="yearTitle"></h2>
+<h2 class="section-title">Select a Semester</h2>
+<div id="semContainer" class="container"></div>
+
+
+<script src="data.js"></script>
+<script>
+function qp(k){return new URLSearchParams(location.search).get(k);}
+function render(){
+  const instId=qp('institution');
+  const profId=qp('profession');
+  const year=qp('year');
+  const semesters=DB[instId].professions[profId].years[year];
+  document.getElementById('yearTitle').textContent=`Year ${year}`;
+  const c=document.getElementById('semContainer');
+  Object.keys(semesters).forEach(sem=>{
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`<img src="https://via.placeholder.com/400x200?text=Semester+${sem}"><h3>Semester ${sem}</h3>`;
+    card.onclick=()=>location.href=`courses.html?institution=${instId}&profession=${profId}&year=${year}&semester=${sem}`;
+    c.appendChild(card);
+  });
+}
+document.addEventListener('DOMContentLoaded',render);
+</script>
+
+</body>
+</html>

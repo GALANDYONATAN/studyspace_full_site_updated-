@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StudySpace Cloud</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <h1>StudySpace Cloud</h1>
+  <nav><a href="index.html">Home</a></nav>
+</header>
+
+
+<a class="back-link" href="javascript:history.back()">&larr; Back</a>
+<h2 class="section-title" id="semTitle"></h2>
+<ul id="courseList" class="course-list"></ul>
+
+
+<script src="data.js"></script>
+<script>
+function qp(k){return new URLSearchParams(location.search).get(k);}
+function render(){
+  const instId=qp('institution');
+  const profId=qp('profession');
+  const year=qp('year');
+  const sem=qp('semester');
+  const courses=DB[instId].professions[profId].years[year][sem];
+  document.getElementById('semTitle').textContent=`Year ${year} – Semester ${sem}`;
+  const ul=document.getElementById('courseList');
+  courses.forEach(c=>{
+    const li=document.createElement('li');
+    li.textContent=c.name;
+    li.onclick=()=>location.href=`course.html?institution=${instId}&profession=${profId}&course=${c.id}&name=${encodeURIComponent(c.name)}`;
+    ul.appendChild(li);
+  });
+}
+document.addEventListener('DOMContentLoaded',render);
+</script>
+
+</body>
+</html>
